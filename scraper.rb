@@ -37,7 +37,7 @@ def make_model_for(year)
       make = row.next_sibling.children[0].text
       @i += 1
     end
-    model.gsub!(/^#{make}/, "").strip!
+    model.gsub!(/^#{Regexp.escape make}/, "").strip!
     results.push([make, model])
     @i += 1
   end
@@ -53,8 +53,8 @@ def insert_into_db(year)
   scraper_results.each do |make_model|
     make = make_model[0]
     model = make_model[1]
-    sql = "INSERT INTO motorcycle_data (make, model, year) VALUES ('#{make}', '#{model}', #{year})"
-    res = conn.exec(sql)
+    sql = "INSERT INTO motorcycle_data (make, model, year) VALUES ($1, $2, $3)"
+    res = conn.exec(sql, [make, model, year])
   end
 end
 
