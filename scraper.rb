@@ -44,4 +44,20 @@ def make_model_for(year)
   return results
 end
 
-puts make_model_for(1997)
+
+def insert_into_db(year)
+  scraper_results = make_model_for(year)
+
+  conn = PGconn.open(:dbname => 'motorcycle_app_development')
+
+  scraper_results.each do |make_model|
+    make = make_model[0]
+    model = make_model[1]
+    sql = "INSERT INTO motorcycle_data (make, model, year) VALUES ('#{make}', '#{model}', #{year})"
+    res = conn.exec(sql)
+  end
+end
+
+for year in (1970..2011)
+  insert_into_db(year)
+end
