@@ -37,6 +37,7 @@ def make_model_for(year)
       make = row.next_sibling.children[0].text
       @i += 1
     end
+    model.gsub!(/^#{make}/, "").strip!
     results.push([make, model])
     @i += 1
   end
