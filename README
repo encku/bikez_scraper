@@ -1,0 +1,6 @@
+Scraper for bikez.com
+
+It's not very robust, and would most likely have to be tweaked in the future.
+I'll push the postgres db (if it's not too large), but this is useable right now
+
+make_model_for(year) returns an array of [make, model]
